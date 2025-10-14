@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 function codeToFlagEmoji(code: string) {
   const cc = code.trim().toUpperCase()
@@ -10,7 +10,15 @@ function codeToFlagEmoji(code: string) {
 
 export function CountryFlagCursor() {
   const [flag, setFlag] = useState("🌐")
-  const [pos, setPos] = useState({ x: -1000, y: -1000 })
+  const elRef = useRef<HTMLDivElement | null>(null)
+
+  // initial offscreen position
+  useEffect(() => {
+    if (elRef.current) {
+      elRef.current.style.left = `-1000px`
+      elRef.current.style.top = `-1000px`
+    }
+  }, [])
 
   useEffect(() => {
     let mounted = true
@@ -28,7 +36,15 @@ export function CountryFlagCursor() {
     loadCountry()
     const onMove = (e: PointerEvent) => {
       if (e.pointerType === "touch") return
-      setPos({ x: e.clientX + 10, y: e.clientY + 14 })
+      // position the flag at the trailing/right edge of the cursor; tweak offsets as needed
+      const offsetX = 3
+      const offsetY = 8
+      if (elRef.current) {
+        // place element such that its left edge aligns with cursor + offsetX
+        elRef.current.style.transform = `none`
+        elRef.current.style.left = `${e.clientX + offsetX}px`
+        elRef.current.style.top = `${e.clientY + offsetY}px`
+      }
     }
     window.addEventListener("pointermove", onMove, { passive: true })
     return () => {
@@ -40,10 +56,11 @@ export function CountryFlagCursor() {
   return (
     <div
       aria-hidden
+      ref={elRef}
       className="pointer-events-none fixed z-50 select-none text-base md:text-lg"
-      style={{ left: pos.x, top: pos.y, transform: "translate(-50%, -50%)" }}
+      style={{ transform: "none" }}
     >
-      <div className="rounded-md bg-background/70 px-1.5 py-0.5 shadow backdrop-blur">{flag}</div>
+      <div className="rounded-md bg-background/70 px-1.5 py-0.5 shadow backdrop-blur will-change-transform">{flag}</div>
     </div>
   )
 }
