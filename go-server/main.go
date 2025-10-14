@@ -105,7 +105,7 @@ func (s *server) handleIndex(w http.ResponseWriter, r *http.Request) {
 	data := map[string]any{
 		"Name":        "Dharma Teja Pola",
 		"Title":       "Full‑Stack AI Developer",
-		"Summary":     "Building scalable AI agents, RAG systems, and Web3 solutions. 2× international hackathon wins and 4+ AI projects.",
+		"Summary":     "Building scalable AI agents, RAG systems, and Web3 solutions. 2x international hackathon wins and 4+ AI projects.",
 		"Location":    "Andhra Pradesh, India",
 		"Email":       "dharmatejapola@gmail.com",
 		"Phone":       "+91 86885 24907",

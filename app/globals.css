@@ -130,7 +130,7 @@
   bottom: .5rem;
   transform: translateX(-50%);
   width: 36%;
-  height: 4px;
+  height: 40px;
   border-radius: 999px;
   background: oklch(0.85 0 0 / 0.7);
 }
@@ -146,7 +146,7 @@
   right: -8rem;
   transform: rotate(25deg);
   width: 38rem;
-  height: 34px;
+  
   z-index: 35;
   overflow: hidden;
   pointer-events: none;
@@ -154,7 +154,7 @@
 .diagonal-marquee .diagonal-inner {
   display: inline-block;
   white-space: nowrap;
-  padding: 0 1rem;
+  padding: 0rem 1rem;
   color: oklch(0.205 0 0); /* dark text on light ribbon */
   background: oklch(0.97 0 0);
   border: 1px solid color-mix(in oklab, var(--color-foreground) 10%, transparent);
@@ -212,23 +212,7 @@
     transform: translateX(-50%);
   }
 }
-.edge-marquee {
-  position: fixed;
-  right: .5rem;
-  top: 50%;
-  transform: translateY(-50%) rotate(90deg);
-  width: 16rem;
-  height: 32px;
-  overflow: hidden;
-  z-index: 40;
-  pointer-events: none;
-}
-.edge-marquee .inner {
-  display: inline-block;
-  white-space: nowrap;
-  animation: edge-marquee 10s linear infinite;
-  color: oklch(0.985 0 0 / 0.8);
-}
+
 
 @layer base {
   * {
