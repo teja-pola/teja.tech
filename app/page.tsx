@@ -10,16 +10,17 @@ import { CountryFlagCursor } from "@/components/country-flag-cursor"
 import { DiagonalMarquee } from "@/components/diagonal-marquee"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { ThreeClient } from "@/components/three-client"
+import { InitialLoader } from "@/components/initial-loader"
 
 export default function Page() {
   // client-only three.js components are provided by <ThreeClient />
-
   return (
-    <main className="relative">
-      <LeftNavbar />
-      <ViewerPulse />
-      <DiagonalMarquee />
-      <CountryFlagCursor />
+    <InitialLoader>
+      <main className="relative">
+        <LeftNavbar />
+        <ViewerPulse />
+        <DiagonalMarquee />
+        <CountryFlagCursor />
 
       {/* floating glass navbar 
       <nav className="fixed left-1/2 top-4 z-50 -translate-x-1/2 rounded-2xl border border-white/10 bg-background/40 px-3 py-2 shadow-lg backdrop-blur supports-[backdrop-filter]:bg-background/30">
@@ -69,31 +70,32 @@ export default function Page() {
           <Hero />
         </div>
         {/* visual accent (three client renders orbit) */}
-      </section>
+        </section>
 
-      {/* Make subsequent sections overlay the hero by giving them a background and higher stacking when scrolled */}
+        {/* Make subsequent sections overlay the hero by giving them a background and higher stacking when scrolled */}
 
-      {/* iPhone socials */}
-      <section id="about" className="mx-auto w-full max-w-screen-md px-4 py-10 md:py-14">
-        <h2 className="mb-4 text-sm font-semibold tracking-wider text-muted-foreground">SOCIALS</h2>
-        <IPhoneSocials />
-      </section>
+        {/* iPhone socials */}
+        <section id="about" className="mx-auto w-full max-w-screen-md px-4 py-10 md:py-14">
+          <h2 className="mb-4 text-sm font-semibold tracking-wider text-muted-foreground">SOCIALS</h2>
+          <IPhoneSocials />
+        </section>
 
-      {/* Featured Projects */}
-      <section id="projects" className="mx-auto w-full max-w-screen-md px-4 py-10 md:py-14">
-        <h2 className="mb-4 text-sm font-semibold tracking-wider text-muted-foreground">PROJECTS</h2>
-  <Projects />
-      </section>
+        {/* Featured Projects */}
+        <section id="projects" className="mx-auto w-full max-w-screen-md px-4 py-10 md:py-14">
+          <h2 className="mb-4 text-sm font-semibold tracking-wider text-muted-foreground">PROJECTS</h2>
+          <Projects />
+        </section>
 
-      {/* Chat about me */}
-      <section id="blogs" className="mx-auto w-full max-w-screen-md px-4 py-10 md:py-14">
-        <h2 className="mb-4 text-sm font-semibold tracking-wider text-muted-foreground">ASK ABOUT ME</h2>
-        <ChatAboutMe />
-      </section>
+        {/* Chat about me */}
+        <section id="blogs" className="mx-auto w-full max-w-screen-md px-4 py-10 md:py-14">
+          <h2 className="mb-4 text-sm font-semibold tracking-wider text-muted-foreground">ASK ABOUT ME</h2>
+          <ChatAboutMe />
+        </section>
 
-      <footer id="resume" className="mx-auto w-full max-w-screen-md px-4 pb-10 pt-6 text-xs text-muted-foreground">
-        © {new Date().getFullYear()} Dharma Teja Pola
-      </footer>
-    </main>
+        <footer id="resume" className="mx-auto w-full max-w-screen-md px-4 pb-10 pt-6 text-xs text-muted-foreground">
+          © {new Date().getFullYear()} Dharma Teja Pola
+        </footer>
+      </main>
+    </InitialLoader>
   )
 }

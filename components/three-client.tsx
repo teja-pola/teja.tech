@@ -7,7 +7,7 @@ import { Environment } from "@react-three/drei"
 
 const Starfield = dynamic(() => import("@/components/three/starfield").then((m) => m.Starfield), {
   ssr: false,
-  loading: () => <div className="h-72 w-full rounded-md bg-muted" aria-hidden />,
+  loading: () => null,
 })
 
 const BasketballOrbit = dynamic(
