@@ -57,19 +57,21 @@ export default function Page() {
 
       
 
-      {/* Hero with star background */}
-      <section id="home" className="relative overflow-hidden min-h-[80vh]">
+      {/* Hero with star background - full viewport and fixed so content can overlay */}
+      <section id="home" className="relative overflow-hidden h-screen">
         <div className="absolute inset-0 pointer-events-none">
           <ThreeClient />
           {/* shooting stars overlay */}
           <div className="shooting-star" />
           
         </div>
-        <div className="relative">
+        <div className="relative h-full">
           <Hero />
         </div>
         {/* visual accent (three client renders orbit) */}
       </section>
+
+      {/* Make subsequent sections overlay the hero by giving them a background and higher stacking when scrolled */}
 
       {/* iPhone socials */}
       <section id="about" className="mx-auto w-full max-w-screen-md px-4 py-10 md:py-14">

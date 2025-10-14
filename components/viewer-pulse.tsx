@@ -30,7 +30,9 @@ export function ViewerPulse() {
           <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400/70" />
           <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400" />
         </span>
-        <span className="text-foreground/90">{count === null ? "1" : count} alien in this UFO</span>
+        <span className="text-foreground/90">{count === null ? "1" : count} {((count === null ? 1 : count) > 1) ? "aliens" : "alien"} in this UFO</span>
+        
+          
       </span>
     </div>
   )

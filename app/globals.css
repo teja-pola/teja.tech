@@ -213,6 +213,21 @@
   }
 }
 
+/* Hero fixed layer so content below can overlay it when scrolling */
+.hero-fixed {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5; /* sit behind hero image (hero image uses z-10) */
+}
+
+/* Sections that should overlay the hero when scrolled */
+.section-overlay {
+  position: relative;
+  z-index: 20; /* higher than hero-fixed */
+  background: transparent; /* keep as needed */
+}
+
 
 @layer base {
   * {

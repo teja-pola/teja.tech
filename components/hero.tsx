@@ -4,20 +4,16 @@ import Image from "next/image"
 
 export function Hero() {
   return (
-    
-      
-
-      
-      <div className="relative z-10 mx-auto mt-28 w-[80vw]  h-[80vh]  sticky bottom-0">
+    <div className="relative z-10 mx-auto w-[90vw] h-full flex items-end justify-center">
+      <div className="relative w-full h-full max-w-4xl">
         <Image
           src="/images/hero.png"
           alt="Portrait"
           fill
           priority
-          sizes="(max-width: 640px) 80vw, 80vw"
-          className="object-contain pointer-events-none select-none"
+          className="object-contain object-bottom pointer-events-none select-none"
         />
       </div>
-    
+    </div>
   )
 }

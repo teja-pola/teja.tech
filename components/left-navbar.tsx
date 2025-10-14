@@ -3,7 +3,7 @@
 import type React from "react"
 
 import { Home, User, FolderGit2, FileText, LibraryBig } from "lucide-react"
-import { ThemeToggle } from "@/components/theme-toggle"
+
 
 export function LeftNavbar() {
   const Item = ({
@@ -27,17 +27,15 @@ export function LeftNavbar() {
   return (
     <aside
       aria-label="Site navigation"
-      className="glass fixed left-3 top-1/2 z-40 -translate-y-1/2 rounded-2xl p-2 md:left-6"
-      style={{ width: 56 }}
+      className="glass fixed left-1/2 top-23 z-40 w-[80vw]  px-2 py-2 flex justify-center rounded-2xl -translate-x-1/2 -translate-y-1/2 md:left-13 md:top-1/2 md:w-auto md:-translate-y-1/2 md:rounded-2xl md:p-2 md:block"
     >
-      <nav className="flex flex-col items-center gap-2">
+      <nav className="flex flex-row items-center gap-2 md:flex-col md:items-center md:gap-2">
         <Item href="#home" label="Home" icon={Home} />
         <Item href="#about" label="About" icon={User} />
         <Item href="#blogs" label="Blog" icon={LibraryBig} />
         <Item href="#projects" label="Projects" icon={FolderGit2} />
         <Item href="#resume" label="Resume" icon={FileText} />
       </nav>
-      
     </aside>
   )
 }
