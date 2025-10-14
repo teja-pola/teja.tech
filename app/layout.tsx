@@ -28,10 +28,11 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${spaceGrotesk.variable} ${GeistMono.variable} antialiased`}>
+    // render server HTML with dark class to avoid light-mode flash before client theme applies
+    <html lang="en" suppressHydrationWarning className={`dark ${spaceGrotesk.variable} ${GeistMono.variable} antialiased`}>
       <body className="font-sans">
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange>
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<> </>}>
             {children}
             <Analytics />
           </Suspense>

@@ -3,6 +3,11 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* hard fallback to black to avoid any light/grey flash on first paint */
+html, body {
+  background: #000;
+}
+
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -118,7 +123,9 @@
 
 .glass {
   border: 1px solid color-mix(in oklab, var(--color-foreground) 10%, transparent);
-  background: color-mix(in oklab, var(--color-background) 30%, transparent);
+  /* fallback to dark translucent black to avoid a light/grey flash on first paint */
+  background: rgba(0,0,0,0.35);
+  /* theme variables will override when available */
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
@@ -132,7 +139,8 @@
   width: 36%;
   height: 40px;
   border-radius: 999px;
-  background: oklch(0.85 0 0 / 0.7);
+  /* default to near-black so the indicator doesn't flash light on load */
+  background: rgba(0,0,0,0.7);
 }
 
 .dark .home-indicator {
@@ -143,7 +151,7 @@
 .diagonal-marquee {
   position: fixed;
   top: 0.25rem;
-  right: -8rem;
+  right: -5rem;
   transform: rotate(25deg);
   width: 38rem;
   
@@ -155,9 +163,10 @@
   display: inline-block;
   white-space: nowrap;
   padding: 0rem 1rem;
-  color: oklch(0.205 0 0); /* dark text on light ribbon */
-  background: oklch(0.97 0 0);
-  border: 1px solid color-mix(in oklab, var(--color-foreground) 10%, transparent);
+  /* default to black background and light text to avoid a light/grey flash on paint */
+  color: #fff;
+  background: #000;
+  border: 1px solid rgba(255,255,255,0.04);
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
   animation: edge-marquee 14s linear infinite;
 }
