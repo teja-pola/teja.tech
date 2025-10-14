@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { Home, User, FolderGit2, FileText } from "lucide-react"
+import { Home, User, FolderGit2, FileText, LibraryBig } from "lucide-react"
 import { ThemeToggle } from "@/components/theme-toggle"
 
 export function LeftNavbar() {
@@ -33,10 +33,11 @@ export function LeftNavbar() {
       <nav className="flex flex-col items-center gap-2">
         <Item href="#home" label="Home" icon={Home} />
         <Item href="#about" label="About" icon={User} />
+        <Item href="#blogs" label="Blog" icon={LibraryBig} />
         <Item href="#projects" label="Projects" icon={FolderGit2} />
         <Item href="#resume" label="Resume" icon={FileText} />
       </nav>
-      <div className="home-indicator" />
+      
     </aside>
   )
 }
