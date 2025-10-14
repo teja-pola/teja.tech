@@ -20,7 +20,7 @@ export function ThreeClient() {
         <Starfield />
       </Suspense>
 
-      <div className="pointer-events-none absolute right-2 top-2 h-24 w-24 md:right-12 md:top-8 md:h-32 md:w-32 opacity-100">
+      <div className="pointer-events-none absolute left-80 right-2 bottom-2 h-24 w-24 md:right-32 md:bottom-8 md:h-32 md:w-32 opacity-100">
         <Suspense fallback={null}>
           <BasketballOrbit />
         </Suspense>
