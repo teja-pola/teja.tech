@@ -1,5 +1,3 @@
-
-import { Suspense } from "react"
 import { Hero } from "@/components/hero"
 import { IPhoneSocials } from "@/components/iphone-socials"
 import { Projects } from "@/components/projects"
@@ -8,7 +6,6 @@ import { LeftNavbar } from "@/components/left-navbar"
 import { ViewerPulse } from "@/components/viewer-pulse"
 import { CountryFlagCursor } from "@/components/country-flag-cursor"
 import { DiagonalMarquee } from "@/components/diagonal-marquee"
-import { ThemeToggle } from "@/components/theme-toggle"
 import { ThreeClient } from "@/components/three-client"
 import { InitialLoader } from "@/components/initial-loader"
 
@@ -22,79 +19,49 @@ export default function Page() {
         <DiagonalMarquee />
         <CountryFlagCursor />
 
-      {/* floating glass navbar 
-      <nav className="fixed left-1/2 top-4 z-50 -translate-x-1/2 rounded-2xl border border-white/10 bg-background/40 px-3 py-2 shadow-lg backdrop-blur supports-[backdrop-filter]:bg-background/30">
-        <ul className="flex items-center gap-4 text-xs">
-          <li>
-            <a href="#home" className="text-muted-foreground hover:text-foreground transition">
-              Home
-            </a>
-          </li>
-          <li>
-            <a href="#about" className="text-muted-foreground hover:text-foreground transition">
-              About
-            </a>
-          </li>
-          <li>
-            <a href="#blogs" className="text-muted-foreground hover:text-foreground transition">
-              Blogs
-            </a>
-          </li>
-          <li>
-            <a href="#projects" className="text-muted-foreground hover:text-foreground transition">
-              Projects
-            </a>
-          </li>
-          <li>
-            <a href="#resume" className="text-muted-foreground hover:text-foreground transition">
-              Resume
-            </a>
-          </li>
-          <li className="pl-2">
-            <ThemeToggle />
-          </li>
-        </ul>
-      </nav>*/}
-
-      
-
-      {/* Hero with star background - full viewport and fixed so content can overlay */}
-      <section id="home" className="relative overflow-hidden h-screen">
-        <div className="absolute inset-0 pointer-events-none">
-          <ThreeClient />
-          {/* shooting stars overlay */}
-          <div className="shooting-star" />
-          
-        </div>
-        <div className="relative h-full">
-          <Hero />
-        </div>
-        {/* visual accent (three client renders orbit) */}
+        {/* Hero with star background - full viewport and fixed so content can overlay */}
+        <section id="home" aria-hidden className="hero-fixed z-0">
+          <div className="absolute inset-0 pointer-events-none">
+            <ThreeClient />
+            <div className="shooting-star" />
+          </div>
+          <div className="relative h-full z-10">
+            <Hero />
+          </div>
         </section>
 
-        {/* Make subsequent sections overlay the hero by giving them a background and higher stacking when scrolled */}
+        <section aria-hidden className="overlay-spacer" />
 
         {/* iPhone socials */}
-        <section id="about" className="mx-auto w-full max-w-screen-md px-4 py-10 md:py-14">
-          <h2 className="mb-4 text-sm font-semibold tracking-wider text-muted-foreground">SOCIALS</h2>
-          <IPhoneSocials />
+        <section id="about" className="overlay-screen">
+          <div className="container">
+            <h2 className="mb-4 text-sm font-semibold tracking-wider text-muted-foreground">SOCIALS</h2>
+            <IPhoneSocials />
+          </div>
         </section>
 
         {/* Featured Projects */}
-        <section id="projects" className="mx-auto w-full max-w-screen-md px-4 py-10 md:py-14">
-          <h2 className="mb-4 text-sm font-semibold tracking-wider text-muted-foreground">PROJECTS</h2>
-          <Projects />
+        <section id="projects" className="overlay-screen">
+          <div className="container">
+            <h2 className="mb-4 text-sm font-semibold tracking-wider text-muted-foreground">PROJECTS</h2>
+            <Projects />
+          </div>
         </section>
 
         {/* Chat about me */}
-        <section id="blogs" className="mx-auto w-full max-w-screen-md px-4 py-10 md:py-14">
-          <h2 className="mb-4 text-sm font-semibold tracking-wider text-muted-foreground">ASK ABOUT ME</h2>
-          <ChatAboutMe />
+        <section id="blogs" className="overlay-screen">
+          <div className="container">
+            <h2 className="mb-4 text-sm font-semibold tracking-wider text-muted-foreground">ASK ABOUT ME</h2>
+            <ChatAboutMe />
+          </div>
         </section>
 
-        <footer id="resume" className="mx-auto w-full max-w-screen-md px-4 pb-10 pt-6 text-xs text-muted-foreground">
-          © {new Date().getFullYear()} Dharma Teja Pola
-        </footer>
+        {/* Resume section */}
+        <section id="resume" className="overlay-screen">
+          <div className="container">
+            <footer className="text-xs text-muted-foreground">© {new Date().getFullYear()} Dharma Teja Pola</footer>
+          </div>
+        </section>
       </main>
     </InitialLoader>
   )

@@ -14,6 +14,7 @@ export const metadata: Metadata = {
     icon: "/",
     
   },
+    generator: 'v0.app'
 }
 
 const spaceGrotesk = Space_Grotesk({
