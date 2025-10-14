@@ -169,14 +169,16 @@
 
 @keyframes shooting-star {
   0% {
-    transform: translate3d(100vw, -20vh, 0) rotate(45deg);
+    /* start off-screen left and above */
+    transform: translate3d(-20vw, -20vh, 0) rotate(110deg);
     opacity: 0;
   }
   10% {
     opacity: 1;
   }
   100% {
-    transform: translate3d(-20vw, 80vh, 0) rotate(45deg);
+    /* end off-screen right and below */
+    transform: translate3d(120vw, 80vh, 0) rotate(110deg);
     opacity: 0;
   }
 }

@@ -8,9 +8,12 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { Suspense } from "react"
 
 export const metadata: Metadata = {
-  title: "v0 App",
-  description: "Created with v0",
-  generator: "v0.app",
+  title: "Dharma Teja",
+  description: "Product Builder",
+  icons: {
+    icon: "/",
+    
+  },
 }
 
 const spaceGrotesk = Space_Grotesk({

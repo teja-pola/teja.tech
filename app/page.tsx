@@ -1,4 +1,4 @@
-import dynamic from "next/dynamic"
+
 import { Suspense } from "react"
 import { Hero } from "@/components/hero"
 import { IPhoneSocials } from "@/components/iphone-socials"
@@ -9,16 +9,10 @@ import { ViewerPulse } from "@/components/viewer-pulse"
 import { CountryFlagCursor } from "@/components/country-flag-cursor"
 import { DiagonalMarquee } from "@/components/diagonal-marquee"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { ThreeClient } from "@/components/three-client"
 
 export default function Page() {
-  const Starfield = dynamic(() => import("@/components/three/starfield").then((m) => m.Starfield), {
-    ssr: false,
-    loading: () => <div className="h-72 w-full rounded-md bg-muted" aria-hidden />,
-  })
-  const BasketballOrbit = dynamic(() => import("@/components/three/basketball-orbit").then((m) => m.BasketballOrbit), {
-    ssr: false,
-    loading: () => null,
-  })
+  // client-only three.js components are provided by <ThreeClient />
 
   return (
     <main className="relative">
@@ -66,9 +60,7 @@ export default function Page() {
       {/* Hero with star background */}
       <section id="home" className="relative overflow-hidden min-h-[80vh]">
         <div className="absolute inset-0 pointer-events-none">
-          <Suspense fallback={null}>
-            <Starfield />
-          </Suspense>
+          <ThreeClient />
           {/* shooting stars overlay */}
           <div className="shooting-star" />
           
@@ -76,11 +68,7 @@ export default function Page() {
         <div className="relative">
           <Hero />
         </div>
-        <div className="pointer-events-none absolute right-2 top-2 h-24 w-24 md:right-12 md:top-8 md:h-32 md:w-32 opacity-100">
-          <Suspense fallback={null}>
-            <BasketballOrbit />
-          </Suspense>
-        </div>
+        {/* visual accent (three client renders orbit) */}
       </section>
 
       {/* iPhone socials */}
@@ -92,8 +80,7 @@ export default function Page() {
       {/* Featured Projects */}
       <section id="projects" className="mx-auto w-full max-w-screen-md px-4 py-10 md:py-14">
         <h2 className="mb-4 text-sm font-semibold tracking-wider text-muted-foreground">PROJECTS</h2>
-        {/* @ts-expect-error Async Server Component */}
-        <Projects />
+  <Projects />
       </section>
 
       {/* Chat about me */}
@@ -103,7 +90,7 @@ export default function Page() {
       </section>
 
       <footer id="resume" className="mx-auto w-full max-w-screen-md px-4 pb-10 pt-6 text-xs text-muted-foreground">
-        © {new Date().getFullYear()} Dharma Teja Pola — Built with Next.js.
+        © {new Date().getFullYear()} Dharma Teja Pola
       </footer>
     </main>
   )

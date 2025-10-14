@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Link from "next/link"
 
 type Tab = "linkedin" | "github" | "x" | "instagram"
@@ -13,6 +13,14 @@ const tabs: { key: Tab; label: string; href: string }[] = [
 
 export function IPhoneSocials() {
   const [active, setActive] = useState<Tab>("linkedin")
+  const [time, setTime] = useState("")
+
+  useEffect(() => {
+    const update = () => setTime(new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }))
+    update()
+    const id = setInterval(update, 60_000)
+    return () => clearInterval(id)
+  }, [])
 
   return (
     <div className="mx-auto w-[280px] md:w-[340px]">
@@ -21,8 +29,8 @@ export function IPhoneSocials() {
         <div className="absolute left-1/2 top-1 h-6 w-36 -translate-x-1/2 rounded-b-2xl bg-black/80 dark:bg-black/90" />
         <div className="aspect-[1125/2436] overflow-hidden rounded-[2.7rem] p-3">
           <div className="relative h-full w-full rounded-[2.2rem] border border-white/10 bg-gradient-to-b from-background/50 to-background/70">
-            <div className="flex items-center justify-between px-4 pt-3 text-[10px] text-muted-foreground/80">
-              <span>{new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</span>
+              <div className="flex items-center justify-between px-4 pt-3 text-[10px] text-muted-foreground/80">
+              <span>{time || ""}</span>
               <div className="flex items-center gap-1">
                 <span aria-hidden className="inline-block h-[7px] w-[7px] rounded-full bg-emerald-400/80" />
                 <span aria-hidden className="inline-block h-[7px] w-[12px] rounded-sm bg-emerald-400/60" />
