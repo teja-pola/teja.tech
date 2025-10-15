@@ -9,7 +9,7 @@ type Tab = "instagram" | "linkedin" | "github" | "twitter"
 const tabs: {
   key: Tab
   href: string
-  icon: React.ElementType
+  icon: React.ComponentType<any>
   screen: string
   label: string
 }[] = [

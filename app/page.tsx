@@ -34,7 +34,7 @@ export default function Page() {
 
         <section id="about" className="overlay-screen">
           <div className="mx-auto w-full md:w-11/12 lg:w-4/5 max-w-screen-xl px-4 py-12 md:py-16 lg:py-20">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 items-start my-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 items-start my-25">
               {/* left: heading stack + description + CTA */}
               <div className="space-y-5 md:space-y-6 my-[50px]">
                 {/* small intro */}
@@ -53,7 +53,7 @@ export default function Page() {
                 </p>
                 {/* CTA */}
                 <div className="flex flex-wrap items-center gap-3 pt-1">
-                  <a href="/resume.pdf" download>
+                  <a href="I can now extract the project details" download>
                     <Button size="lg" className="font-semibold">
                       Download Resume
                     </Button>
