@@ -33,7 +33,7 @@ export default function Page() {
         <section aria-hidden className="overlay-spacer" />
 
         <section id="about" className="overlay-screen">
-          <div className="container max-w-6xl mx-auto px-4 py-12 md:py-16 lg:py-20">
+          <div className="mx-auto w-full md:w-11/12 lg:w-4/5 max-w-screen-xl px-4 py-12 md:py-16 lg:py-20">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 items-start my-10">
               {/* left: heading stack + description + CTA */}
               <div className="space-y-5 md:space-y-6 my-[50px]">
@@ -85,15 +85,15 @@ export default function Page() {
 
         {/* Featured Projects */}
         <section id="projects" className="overlay-screen">
-          <div className="container py-2.5 px-[173px] my-[22px]">
-            <h2 className="mb-4 text-sm font-semibold tracking-wider text-muted-foreground">PROJECTS</h2>
+          <div className="mx-auto w-full md:w-11/12 lg:w-4/5 max-w-screen-xl px-4 py-12 my-6">
+            
             <Projects />
           </div>
         </section>
 
         {/* Chat about me */}
         <section id="blogs" className="overlay-screen">
-          <div className="container">
+          <div className="mx-auto w-full md:w-11/12 lg:w-4/5 max-w-screen-xl px-4 py-12">
             <h2 className="mb-4 text-sm font-semibold tracking-wider text-muted-foreground">ASK ABOUT ME</h2>
             <ChatAboutMe />
           </div>
@@ -101,7 +101,7 @@ export default function Page() {
 
         {/* Resume section */}
         <section id="resume" className="overlay-screen">
-          <div className="container">
+          <div className="mx-auto w-full md:w-11/12 lg:w-4/5 max-w-screen-xl px-4 py-6">
             <footer className="text-xs text-muted-foreground">© {new Date().getFullYear()} Dharma Teja Pola</footer>
           </div>
         </section>
