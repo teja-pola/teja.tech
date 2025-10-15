@@ -1,4 +1,5 @@
 import { knowledge } from "@/lib/personal-knowledge"
+import GithubCalendar from "./github-calendar"
 
 export async function Projects() {
   const owner = "teja-pola"
@@ -79,11 +80,18 @@ export async function Projects() {
 
   const contributions = await fetchContributions()
 
+  // The calendar is rendered client-side by the GithubCalendar component
+
   return (
     <section aria-labelledby="proof-of-work">
       <h2 id="proof-of-work" className="mx-auto mb-8 max-w-screen-md text-center text-3xl font-extrabold tracking-tight">
         Proof of work
       </h2>
+
+      {/* GitHub contributions calendar (green dots) rendered client-side */}
+      <div className="mx-auto mb-6 w-full max-w-screen-md overflow-auto px-4" aria-hidden>
+        <GithubCalendar />
+      </div>
 
       <div className="mx-auto grid max-w-screen-xl grid-cols-1 gap-6 px-4 md:grid-cols-3">
         {cards.map((c) => (
@@ -181,11 +189,7 @@ export async function Projects() {
         }
       `}</style>
       
-      {contributions ? (
-        <div className="mt-8 text-center text-sm text-muted-foreground">
-          Total contributions this year: {contributions.contributionCalendar?.totalContributions ?? "—"}
-        </div>
-      ) : null}
+      {/* contributions total removed intentionally — only the SVG calendar is shown above */}
     </section>
   )
 }
