@@ -93,7 +93,7 @@ export async function Projects() {
         <GithubCalendar />
       </div>
 
-      <div className="mx-auto grid max-w-screen-xl grid-cols-1 gap-6 px-4 md:grid-cols-3">
+      <div className="mx-auto grid max-w-screen-xl grid-cols-1 gap-6 px-4 md:grid-cols-3 my-0.5 my-0.5 my-0 my-0.5 my-0.5">
         {cards.map((c) => (
           <article
             key={c.key}

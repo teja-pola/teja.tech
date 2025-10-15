@@ -25,7 +25,7 @@ function GithubCalendar() {
   const GH: React.ComponentType<any> = GitHubCalendar as unknown as React.ComponentType<any>
 
   return (
-    <div className="github-calendar-wrapper mx-auto flex justify-center">
+    <div className="github-calendar-wrapper mx-auto flex justify-center my-1">
       <GH username="teja-pola" transformData={processContributions} totalCount={totalCount} />
       <style>{`.github-calendar-wrapper .ContributionCalendar-label, .github-calendar-wrapper h2 { display: none !important; }`}</style>
     </div>
