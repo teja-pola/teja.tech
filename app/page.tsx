@@ -8,9 +8,9 @@ import { CountryFlagCursor } from "@/components/country-flag-cursor"
 import { DiagonalMarquee } from "@/components/diagonal-marquee"
 import { ThreeClient } from "@/components/three-client"
 import { InitialLoader } from "@/components/initial-loader"
+import { Button } from "@/components/ui/button"
 
 export default function Page() {
-  // client-only three.js components are provided by <ThreeClient />
   return (
     <InitialLoader>
       <main className="relative">
@@ -32,17 +32,60 @@ export default function Page() {
 
         <section aria-hidden className="overlay-spacer" />
 
-        {/* iPhone socials */}
         <section id="about" className="overlay-screen">
-          <div className="container">
-            <h2 className="mb-4 text-sm font-semibold tracking-wider text-muted-foreground">SOCIALS</h2>
-            <IPhoneSocials />
+          <div className="container max-w-6xl mx-auto px-4 py-12 md:py-16 lg:py-20">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 items-start my-10">
+              {/* left: heading stack + description + CTA */}
+              <div className="space-y-5 md:space-y-6 my-[50px]">
+                {/* small intro */}
+                <p className="text-xs md:text-sm tracking-wider text-muted-foreground uppercase">Hi, I&apos;m</p>
+                {/* big name */}
+                <h3 className="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-none text-foreground">
+                  DHARMATEJA
+                </h3>
+                {/* faded role line */}
+                <p className="text-base md:text-lg text-muted-foreground">Full‑Stack Developer @ Parul University</p>
+                {/* description */}
+                <p className="text-pretty leading-relaxed text-foreground/90">
+                  I&apos;m a product builder (… full‑stack developer) who loves to iterate ideas and ship thoughtful
+                  products end‑to‑end. I enjoy open‑source contributions and crafting dependable, fast experiences
+                  powered by AI.
+                </p>
+                {/* CTA */}
+                <div className="flex flex-wrap items-center gap-3 pt-1">
+                  <a href="/resume.pdf" download>
+                    <Button size="lg" className="font-semibold">
+                      Download Resume
+                    </Button>
+                  </a>
+                </div>
+                {/* unique off-duty line */}
+                <div className="relative inline-block select-none mt-4">
+                  {/* red pin (pivot) */}
+                  <span
+                    aria-hidden
+                    className="absolute -left-2 -top-2 z-10 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-red-600 ring-2 ring-black/40 shadow-sm"
+                  >
+                    <span className="h-1.5 w-1.5 rounded-full bg-white/85" />
+                  </span>
+                  <p className="m-0 bg-orange-200 text-[33px] md:text-[33px] leading-tight font-semibold border-0 py-1.5 pl-5 pr-2 rounded-[3px] origin-top-left rotate-[2deg] shadow-md text-chart-1">
+                    {"When I'm not coding, I do content creation. "}
+                    <span className="text-[8px]">{"tap the logos on the right to explore my socials."}</span>
+                  </p>
+                </div>
+              </div>
+
+              {/* right: iPhone socials */}
+              <div className="flex justify-center md:justify-end">
+                <IPhoneSocials />
+              </div>
+            </div>
           </div>
         </section>
 
         {/* Featured Projects */}
         <section id="projects" className="overlay-screen">
-          <div className="container">
+          <div className="container py-2.5 px-[173px] my-[22px]">
             <h2 className="mb-4 text-sm font-semibold tracking-wider text-muted-foreground">PROJECTS</h2>
             <Projects />
           </div>
