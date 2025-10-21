@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { Home, User, FolderGit2, FileText, LibraryBig } from "lucide-react"
+import { Home, User, FolderGit2, PencilRuler , LibraryBig } from "lucide-react"
 
 
 export function LeftNavbar() {
@@ -32,9 +32,9 @@ export function LeftNavbar() {
       <nav className="flex flex-row items-center gap-2 md:flex-col md:items-center md:gap-2">
         <Item href="#home" label="Home" icon={Home} />
         <Item href="#about" label="About" icon={User} />
-        <Item href="#blogs" label="Blog" icon={LibraryBig} />
         <Item href="#projects" label="Projects" icon={FolderGit2} />
-        <Item href="#resume" label="Resume" icon={FileText} />
+        <Item href="#blogs" label="Blog" icon={LibraryBig} />
+        <Item href="#skills" label="Skills" icon={PencilRuler} />
       </nav>
     </aside>
   )
