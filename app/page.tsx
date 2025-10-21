@@ -10,7 +10,7 @@ import { InitialLoader } from "@/components/initial-loader"
 import { Button } from "@/components/ui/button"
 import BlogBlocks from "@/components/blog-blocks"
 import { SkillsPhysics } from "@/components/skills-physics"
-
+import {ChatInterface} from "@/components/chat-interface"
 
 
 export default function Page() {
@@ -22,6 +22,7 @@ export default function Page() {
         <ViewerPulse />
         <DiagonalMarquee />
         <CountryFlagCursor />
+        <ChatInterface />
 
         {/* Hero with star background - full viewport and fixed so content can overlay */}
         <section id="home" aria-hidden className="hero-fixed z-0">
@@ -110,7 +111,7 @@ export default function Page() {
         <section id="skills" className="overlay-screen py-12">
           <div className="mx-auto w-full md:w-11/12 lg:w-4/5 max-w-screen-xl px-4">
             <div className="flex items-center justify-center mb-8">
-              <h2 className="text-3xl md:text-4xl font-extrabold text-foreground">Skills & Interests</h2>
+              <h2 className="text-3xl  font-extrabold text-foreground">Skills & Interests</h2>
             </div>
             <div className="w-full h-[80vh] rounded-xl overflow-hidden">
               <SkillsPhysics />
@@ -118,18 +119,7 @@ export default function Page() {
             <div className="mt-6 text-center text-muted-foreground text-sm">
               <p>Click and drag to interact with the items</p>
             </div>
-          </div>
-        </section>
-        
-         {/*Ask me anything */}
-         <section id="ask" className="overlay-screen">
-          <div className="mx-auto w-full md:w-11/12 lg:w-4/5 max-w-screen-xl px-4 py-12">
-            <div className="flex items-center justify-center mb-6">
-              <h2 className="text-3xl font-extrabold">Ask Me Anything</h2>
-            </div>
-            
-          </div>
-          <div className="w-full flex justify-center">
+            <div className="w-full flex justify-center">
             <footer
               className="text-xs text-muted-foreground text-center w-full pb-4 font-[Space_Grotesk] absolute bottom-0 left-0 flex justify-center"
               style={{ fontFamily: "'Space Grotesk', sans-serif" }}
@@ -137,7 +127,10 @@ export default function Page() {
               © {new Date().getFullYear()} Dharma Teja Pola
             </footer>
           </div>
+          </div>
         </section>
+        
+         
         
         
       </main>

@@ -10,8 +10,8 @@ gsap.registerPlugin(ScrollTrigger);
 const techStack = [
   'React', 'TypeScript', 'Node.js', 'Next.js',
   'PostgreSQL', 'MongoDB', 'GraphQL', 'AWS',
-  'Docker', 'Kubernetes', 'Python', 'Go',
-  'Rust', 'TensorFlow', 'Three.js', 'WebGL'
+  'Docker', 'HTML', 'Python', 'TailwindCSS',
+  'Agents', 'Express', 'Three.js', 'Hono', 'RAG', 'LLMs', 'WEB3', 'cloudflare', 'JavaScript'
 ];
 
 export function SkillsPhysics() {
