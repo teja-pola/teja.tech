@@ -1,33 +1,79 @@
-"use client"
+'use client';
 
-import type React from "react"
+import { useEffect } from 'react';
+import { Home, User, FolderGit2, PencilRuler, LibraryBig } from 'lucide-react';
 
-import { Home, User, FolderGit2, PencilRuler , LibraryBig } from "lucide-react"
-
+function scrollToSection(sectionId: string) {
+  const element = document.getElementById(sectionId);
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth' });
+    // Update URL without triggering a page reload
+    window.history.pushState({}, '', `#${sectionId}`);
+  }
+}
 
 export function LeftNavbar() {
+  // Handle initial load and back/forward navigation
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.substring(1);
+      if (hash) {
+        const element = document.getElementById(hash);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    };
+
+    // Listen for hash changes
+    window.addEventListener('hashchange', handleHashChange);
+
+    // Check for hash on initial load
+    if (window.location.hash) {
+      const hash = window.location.hash.substring(1);
+      const element = document.getElementById(hash);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+    };
+  }, []);
+
   const Item = ({
     href,
     label,
     icon: Icon,
   }: {
-    href: string
-    label: string
-    icon: React.ComponentType<{ className?: string }>
-  }) => (
-    <a
-      href={href}
-      className="flex h-10 w-10 items-center justify-center rounded-xl text-muted-foreground hover:text-foreground transition"
-      aria-label={label}
-      title={label}
-    >
-      <Icon className="h-5 w-5" />
-    </a>
-  )
+    href: string;
+    label: string;
+    icon: React.ComponentType<{ className?: string }>;
+  }) => {
+    const handleClick = (e: React.MouseEvent) => {
+      e.preventDefault();
+      const sectionId = href.substring(1); // Remove the '#' from href
+      scrollToSection(sectionId);
+    };
+
+    return (
+      <a
+        href={href}
+        onClick={handleClick}
+        className="flex h-10 w-10 items-center justify-center rounded-xl text-muted-foreground hover:text-foreground transition"
+        aria-label={label}
+        title={label}
+      >
+        <Icon className="h-5 w-5" />
+      </a>
+    );
+  };
+
   return (
     <aside
       aria-label="Site navigation"
-      className="glass fixed left-1/2 top-23 z-40 w-[80vw]  px-2 py-2 flex justify-center rounded-2xl -translate-x-1/2 -translate-y-1/2 md:left-13 md:top-1/2 md:w-auto md:-translate-y-1/2 md:rounded-2xl md:p-2 md:block"
+      className="glass fixed left-1/2 top-23 z-40 w-[80vw] px-2 py-2 flex justify-center rounded-2xl -translate-x-1/2 -translate-y-1/2 md:left-13 md:top-1/2 md:w-auto md:-translate-y-1/2 md:rounded-2xl md:p-2 md:block"
     >
       <nav className="flex flex-row items-center gap-2 md:flex-col md:items-center md:gap-2">
         <Item href="#home" label="Home" icon={Home} />
@@ -37,5 +83,5 @@ export function LeftNavbar() {
         <Item href="#skills" label="Skills" icon={PencilRuler} />
       </nav>
     </aside>
-  )
+  );
 }
