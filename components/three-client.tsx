@@ -15,7 +15,11 @@ const BasketballOrbit = dynamic(
   { ssr: false, loading: () => null }
 )
 
-const UFO = dynamic(() => import("@/components/three/ufo").then((m) => m.UFO), { ssr: false, loading: () => null })
+const UFO = dynamic(() => import("@/components/three/ufo").then((m) => m.UFO), { 
+  ssr: false, 
+  loading: () => null 
+})
+
 
 export function ThreeClient() {
   return (
@@ -30,8 +34,8 @@ export function ThreeClient() {
         </Suspense>
       </div>
 
-  {/* Fullscreen UFO canvas constrained to its parent (hero) so UFO appears only inside the hero section */}
-  <div className="pointer-events-none absolute inset-0 z-50 opacity-100">
+      {/* Fullscreen UFO canvas constrained to its parent (hero) so UFO appears only inside the hero section */}
+      <div className="pointer-events-none absolute inset-0 z-50 opacity-100">
         <Suspense fallback={null}>
             <Canvas camera={{ position: [0, 0, 8] }} className="absolute inset-0">
               <Environment preset="sunset" background={false} />
@@ -42,6 +46,7 @@ export function ThreeClient() {
           </Canvas>
         </Suspense>
       </div>
+
     </>
   )
 }

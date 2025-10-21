@@ -1,7 +1,6 @@
 import { Hero } from "@/components/hero"
 import { IPhoneSocials } from "@/components/iphone-socials"
 import { Projects } from "@/components/projects"
-import { ChatAboutMe } from "@/components/chat-about-me"
 import { LeftNavbar } from "@/components/left-navbar"
 import { ViewerPulse } from "@/components/viewer-pulse"
 import { CountryFlagCursor } from "@/components/country-flag-cursor"
@@ -9,10 +8,15 @@ import { DiagonalMarquee } from "@/components/diagonal-marquee"
 import { ThreeClient } from "@/components/three-client"
 import { InitialLoader } from "@/components/initial-loader"
 import { Button } from "@/components/ui/button"
+import BlogBlocks from "@/components/blog-blocks"
+import { SkillsPhysics } from "@/components/skills-physics"
+
+
 
 export default function Page() {
   return (
     <InitialLoader>
+      
       <main className="relative">
         <LeftNavbar />
         <ViewerPulse />
@@ -53,7 +57,8 @@ export default function Page() {
                 </p>
                 {/* CTA */}
                 <div className="flex flex-wrap items-center gap-3 pt-1">
-                  <a href="I can now extract the project details" download>
+                  {/* resume file is stored in public/files/ - link with download attribute */}
+                  <a href="/files/DharmaTejaPola(1:75:77).pdf" download="DharmaTejaPola.pdf">
                     <Button size="lg" className="font-semibold">
                       Download Resume
                     </Button>
@@ -91,20 +96,50 @@ export default function Page() {
           </div>
         </section>
 
-        {/* Chat about me */}
+        {/* Blogs */}
         <section id="blogs" className="overlay-screen">
           <div className="mx-auto w-full md:w-11/12 lg:w-4/5 max-w-screen-xl px-4 py-12">
-            <h2 className="mb-4 text-sm font-semibold tracking-wider text-muted-foreground">ASK ABOUT ME</h2>
-            <ChatAboutMe />
+            <div className="flex items-center justify-center mb-6">
+              <h2 className="text-3xl font-extrabold">Blogs</h2>
+            </div>
+            <BlogBlocks />
           </div>
         </section>
 
-        {/* Resume section */}
-        <section id="resume" className="overlay-screen">
-          <div className="mx-auto w-full md:w-11/12 lg:w-4/5 max-w-screen-xl px-4 py-6">
-            <footer className="text-xs text-muted-foreground">© {new Date().getFullYear()} Dharma Teja Pola</footer>
+        {/* Skills and Interests */}
+        <section id="skills" className="overlay-screen py-12">
+          <div className="mx-auto w-full md:w-11/12 lg:w-4/5 max-w-screen-xl px-4">
+            <div className="flex items-center justify-center mb-8">
+              <h2 className="text-3xl md:text-4xl font-extrabold text-foreground">Skills & Interests</h2>
+            </div>
+            <div className="w-full h-[80vh] rounded-xl overflow-hidden">
+              <SkillsPhysics />
+            </div>
+            <div className="mt-6 text-center text-muted-foreground text-sm">
+              <p>Click and drag to interact with the items</p>
+            </div>
           </div>
         </section>
+        
+         {/*Ask me anything */}
+         <section id="ask" className="overlay-screen">
+          <div className="mx-auto w-full md:w-11/12 lg:w-4/5 max-w-screen-xl px-4 py-12">
+            <div className="flex items-center justify-center mb-6">
+              <h2 className="text-3xl font-extrabold">Ask Me Anything</h2>
+            </div>
+            
+          </div>
+          <div className="w-full flex justify-center">
+            <footer
+              className="text-xs text-muted-foreground text-center w-full pb-4 font-[Space_Grotesk] absolute bottom-0 left-0 flex justify-center"
+              style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+            >
+              © {new Date().getFullYear()} Dharma Teja Pola
+            </footer>
+          </div>
+        </section>
+        
+        
       </main>
     </InitialLoader>
   )

@@ -1,5 +1,6 @@
 import { knowledge } from "@/lib/personal-knowledge"
 import GithubCalendar from "./github-calendar"
+import Image from "next/image"
 
 export async function Projects() {
   const owner = "teja-pola"
@@ -14,7 +15,7 @@ export async function Projects() {
   const ACHIEVEMENTS: Record<string, { text: string; color: string }> = {
     "project-cartify": { text: "Winner ($3000 credits): Raise Your Hack 2025", color: "bg-emerald-600/80" },
     "project-zesty": { text: "Honorable Mention ($5000 cash): Qloo LLM 2025", color: "bg-rose-600/80" },
-    "project-zeo": { text: "3rd Prize at NovaSpark 2025", color: "bg-indigo-600/80" },
+    "project-zeo": { text: "3rd Prize: NovaSpark 2025", color: "bg-indigo-600/80" },
   }
 
   // project-specific skill tags
@@ -44,6 +45,20 @@ export async function Projects() {
     const achievements = ACHIEVEMENTS[id] ? [ACHIEVEMENTS[id]] : [{ text: "Featured in portfolio", color: "bg-emerald-600/80" }]
     const skills = SKILLS[id] ?? []
 
+    // Demo URLs (YouTube) provided by user: cartify, zesty, zeo
+    const DEMO_URLS: Record<string, string> = {
+      "project-cartify": "https://www.youtube.com/watch?v=PDNTi9PDBHE&embeds_referring_euri=https%3A%2F%2Fdevpost.com%2F&source_ve_path=Mjg2NjY",
+      "project-zesty": "https://www.youtube.com/watch?v=j1WDxcDquS8&embeds_referring_euri=https%3A%2F%2Fdevpost.com%2F&source_ve_path=Mjg2NjY",
+      "project-zeo": "https://www.youtube.com/watch?v=K_HuHId_95Q",
+    }
+
+    // Production site URLs provided by user
+    const SITE_URLS: Record<string, string> = {
+      "project-cartify": "https://kaleidoscopic-palmier-705015.netlify.app",
+      "project-zesty": "https://zesty-1.onrender.com",
+      "project-zeo": "https://zeo-p8vd.onrender.com",
+    }
+
     return {
       key: id,
       title,
@@ -52,8 +67,8 @@ export async function Projects() {
       achievements,
       skills,
       repoUrl,
-      demoUrl: "#",
-      siteUrl: "#",
+      demoUrl: DEMO_URLS[id] ?? "#",
+      siteUrl: SITE_URLS[id] ?? "#",
     }
   })
 
@@ -100,7 +115,15 @@ export async function Projects() {
             className="project-card group relative flex flex-col rounded-2xl border border-border bg-background/60 p-6 shadow-lg backdrop-blur transform transition-transform hover:-translate-y-1"
           >
             <div className="mb-4 h-40 w-full overflow-hidden rounded-lg bg-gradient-to-tr from-slate-800 to-slate-700">
-              <div className="flex h-full items-center justify-center text-xs text-muted-foreground">{c.title}</div>
+              {/** image from public/images/projects/{key}.png — drop your images there */}
+              <Image
+                src={`/images/${c.key.replace("project-", "")}.png`}
+                alt={`${c.title} screenshot`}
+                width={1200}
+                height={600}
+                className="object-cover w-full h-40"
+                placeholder="empty"
+              />
             </div>
 
             <h3 className="mb-1 text-xl font-semibold">{c.title}</h3>

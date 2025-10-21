@@ -17,19 +17,19 @@ export const knowledge: Doc[] = [
     id: "project-cartify",
     title: "Cartify.ai — AI Shopping Agent",
     text: "React, TypeScript, Groq (Llama 3.1), Supabase. Voice-based search on 50k+ Walmart items. Increased engagement and search efficiency; Winner($3000 credits): Raise Your Hack 2025.",
-    url: "https://github.com/teja-pola/Cartify",
+    url: "https://github.com/teja-pola/Cartify.ai",
   },
   {
     id: "project-zesty",
     title: "Zesty — Unrecommendation Engine",
     text: "Integrated Qloo API + Groq LLM to suggest contrasting content. React + Tailwind + TypeScript. Honorable Mention($5000 cash): Qloo LLM 2025.",
-    url: "https://github.com/teja-pola/Zesty",
+    url: "https://github.com/teja-pola/Zesty-v2",
   },
   {
     id: "project-zeo",
     title: "Zeo — AI Mental Health Companion",
     text: "Real-time empathetic interactions (WebRTC), privacy-first, no auth. Supabase for encrypted sessions. 3rd Prize at NovaSpark 2025.",
-    url: "https://github.com/teja-pola/Zeo",
+    url: "https://github.com/teja-pola/zeo.ai",
   },
   {
     id: "skills",
