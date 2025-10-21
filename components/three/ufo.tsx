@@ -23,7 +23,7 @@ export function UFO({ start = [-6, -1.2, -4], end = [6, 1.2, -4], duration = 3.5
   const endVec = new Vector3(...end)
   const travelVec = new Vector3().subVectors(endVec, startVec)
   // viewport-NDC path (attached to hero viewport) converted to world
-  const { camera } = useThree()
+  const { camera, size } = useThree()
   useFrame(({ clock }) => {
     if (!group.current) return
 
@@ -36,10 +36,13 @@ export function UFO({ start = [-6, -1.2, -4], end = [6, 1.2, -4], duration = 3.5
 
     // Deterministic NDC waypoints (x,y in -1..1)
     // path: left-bottom -> left-top -> right-top (circular motion)
-    const ndcPts: Array<[number, number]> = [
+    const isMobile = size.width < 640
+const rightTop: [number, number] = isMobile ? [0.35, 0.35] : [0.47, 0.55]
+
+const ndcPts: Array<[number, number]> = [
       [-0.95, -0.95], // left-bottom corner
-      [-0.95, 0.85], // left-top
-      [0.47, 0.55], // right-top near marquee
+      [-0.95, 0.85],  // left-top
+      rightTop,       // right-top (responsive)
     ]
 
     const distance = 6
