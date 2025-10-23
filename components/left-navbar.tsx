@@ -13,29 +13,40 @@ export function LeftNavbar() {
   // Set active section based on scroll
   useEffect(() => {
     const handleScroll = () => {
-      const viewportMarker = window.innerHeight * 0.25; // 25% from top
-      let found: string | null = null;
+      // Find which section is currently most visible in viewport
+      let currentSection = 'home';
+      const scrollPosition = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const threshold = windowHeight * 0.3; // 30% from top
 
-      for (const section of sections) {
+      // Check each section from last to first (so earlier sections take precedence)
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = sections[i];
         const element = document.getElementById(section);
         if (!element) continue;
+        
         const rect = element.getBoundingClientRect();
-        if (rect.top <= viewportMarker && rect.bottom >= viewportMarker) {
-          found = section;
+        const elementTop = rect.top + scrollPosition;
+        
+        // If we've scrolled past this section's start point
+        if (scrollPosition + threshold >= elementTop) {
+          currentSection = section;
           break;
         }
       }
 
-      if (found && found !== activeSection) {
-        setActiveSection(found);
-      }
+      setActiveSection(currentSection);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll, { passive: true });
     handleScroll(); // Initial check
 
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [sections, activeSection]);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
+  }, [sections]);
 
   const handleNavigation = (section: string) => {
     setActiveSection(section);
@@ -60,15 +71,18 @@ export function LeftNavbar() {
     return (
       <button
         onClick={() => handleNavigation(section)}
-        className={`flex h-10 w-10 items-center justify-center rounded-xl transition relative ${
+        className={`flex h-10 w-10 items-center justify-center rounded-xl transition-all duration-300 ease-in-out relative ${
           isActive
-            ? 'text-foreground bg-foreground/10'
-            : 'text-muted-foreground hover:text-foreground cursor-pointer'
+            ? 'text-foreground bg-foreground/10 scale-110 shadow-lg'
+            : 'text-muted-foreground hover:text-foreground hover:scale-105 cursor-pointer'
         }`}
         aria-label={label}
         title={label}
       >
-        <Icon className="h-5 w-5" />
+        <Icon className={`transition-transform duration-300 ${isActive ? 'h-5 w-5' : 'h-5 w-5'}`} />
+        {isActive && (
+          <span className="absolute inset-0 rounded-xl bg-foreground/5 animate-pulse" />
+        )}
       </button>
     );
   };

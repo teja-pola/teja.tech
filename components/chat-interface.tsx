@@ -144,7 +144,7 @@ export function ChatInterface() {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      text: "Hey there! I'm Dharmateja. Ask me anything about my work, skills, or interests!",
+      text: "Hey there! I'm Teja. Ask me anything!",
       isUser: false,
       timestamp: new Date(),
     },
@@ -199,7 +199,7 @@ export function ChatInterface() {
       return response.text();
     } catch (error) {
       console.error('Error generating response:', error);
-      return "I'm having trouble connecting to my knowledge base. Please try again later.";
+      return "I'm having trouble connecting to my brain. Please try again later.";
     }
   };
 
