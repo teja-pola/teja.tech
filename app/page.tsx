@@ -116,7 +116,7 @@ export default function Page() {
             <div className="w-full h-[80vh] rounded-xl overflow-hidden">
               <SkillsPhysics />
             </div>
-            <div className="mt-6 text-center text-muted-foreground text-sm">
+            <div className="mt-3 text-center text-muted-foreground text-sm">
               <p>Click and drag to interact with the items</p>
             </div>
             <div className="w-full flex justify-center">

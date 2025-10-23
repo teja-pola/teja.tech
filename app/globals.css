@@ -257,8 +257,7 @@
 
 /* fully opaque, full-viewport overlay panels that cover the fixed hero */
 .overlay-screen {
-  position: sticky;
-  top: 0;
+  position: relative;
   z-index: 30; /* above hero-fixed/stars */
   background: var(--background); /* fully opaque */
   width: 100%;

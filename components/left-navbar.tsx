@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import { Home, User, FolderGit2, PencilRuler, LibraryBig, Lock } from 'lucide-react';
+import { Home, User, FolderGit2, PencilRuler, LibraryBig } from 'lucide-react';
 
 export function LeftNavbar() {
   const router = useRouter();
@@ -13,17 +13,21 @@ export function LeftNavbar() {
   // Set active section based on scroll
   useEffect(() => {
     const handleScroll = () => {
-      const scrollPosition = window.scrollY + 100;
-      
+      const viewportMarker = window.innerHeight * 0.25; // 25% from top
+      let found: string | null = null;
+
       for (const section of sections) {
         const element = document.getElementById(section);
-        if (element) {
-          const { offsetTop, offsetHeight } = element;
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            setActiveSection(section);
-            break;
-          }
+        if (!element) continue;
+        const rect = element.getBoundingClientRect();
+        if (rect.top <= viewportMarker && rect.bottom >= viewportMarker) {
+          found = section;
+          break;
         }
+      }
+
+      if (found && found !== activeSection) {
+        setActiveSection(found);
       }
     };
 
@@ -31,20 +35,14 @@ export function LeftNavbar() {
     handleScroll(); // Initial check
 
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [sections]);
+  }, [sections, activeSection]);
 
   const handleNavigation = (section: string) => {
-    const currentIndex = sections.indexOf(activeSection);
-    const targetIndex = sections.indexOf(section);
-    
-    // Only allow forward navigation
-    if (targetIndex >= currentIndex) {
-      setActiveSection(section);
-      router.push(`#${section}`, { scroll: false });
-      const element = document.getElementById(section);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
+    setActiveSection(section);
+    router.push(`#${section}`, { scroll: false });
+    const element = document.getElementById(section);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -53,37 +51,27 @@ export function LeftNavbar() {
     label,
     icon: Icon,
     isActive,
-    isClickable,
   }: {
     section: string;
     label: string;
     icon: React.ComponentType<{ className?: string }>;
     isActive: boolean;
-    isClickable: boolean;
   }) => {
     return (
       <button
-        onClick={() => isClickable && handleNavigation(section)}
+        onClick={() => handleNavigation(section)}
         className={`flex h-10 w-10 items-center justify-center rounded-xl transition relative ${
           isActive
             ? 'text-foreground bg-foreground/10'
-            : isClickable
-            ? 'text-muted-foreground hover:text-foreground cursor-pointer'
-            : 'text-muted-foreground/30 cursor-not-allowed'
+            : 'text-muted-foreground hover:text-foreground cursor-pointer'
         }`}
         aria-label={label}
-        title={isClickable ? label : `Navigate to ${label} (scroll up to access)`}
-        disabled={!isClickable}
+        title={label}
       >
         <Icon className="h-5 w-5" />
-        {!isClickable && (
-          <Lock className="absolute -top-1 -right-1 h-3 w-3 text-muted-foreground/50" />
-        )}
       </button>
     );
   };
-
-  const currentSectionIndex = sections.indexOf(activeSection);
 
   return (
     <aside
@@ -91,7 +79,7 @@ export function LeftNavbar() {
       className="glass fixed left-1/2 top-23 z-40 w-[80vw] px-2 py-2 flex justify-center rounded-2xl -translate-x-1/2 -translate-y-1/2 md:left-13 md:top-1/2 md:w-auto md:-translate-y-1/2 md:rounded-2xl md:p-2 md:block"
     >
       <nav className="flex flex-row items-center gap-2 md:flex-col md:items-center md:gap-2">
-        {sections.map((section, index) => (
+        {sections.map((section) => (
           <Item
             key={section}
             section={section}
@@ -104,7 +92,6 @@ export function LeftNavbar() {
               PencilRuler
             }
             isActive={activeSection === section}
-            isClickable={index >= currentSectionIndex}
           />
         ))}
       </nav>
