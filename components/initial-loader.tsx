@@ -27,7 +27,36 @@ export function InitialLoader({ children }: Props) {
       import("@react-three/drei").then(() => null).catch(() => null),
     ])
 
-    // 3) Wait for window load (images, fonts, etc.) but with a timeout to avoid hanging
+    
+    // 4) Wait for all images to load
+    const imageLoad = new Promise<void>((resolve) => {
+      if (typeof window === "undefined") return resolve()
+      
+      const images = Array.from(document.querySelectorAll("img"))
+      if (images.length === 0) return resolve()
+      
+      let loadedCount = 0
+      const totalImages = images.length
+      
+      const checkComplete = () => {
+        loadedCount++
+        if (loadedCount >= totalImages) resolve()
+      }
+      
+      images.forEach(img => {
+        if (img.complete) {
+          checkComplete()
+        } else {
+          img.addEventListener("load", checkComplete, { once: true })
+          img.addEventListener("error", checkComplete, { once: true })
+        }
+      })
+      
+      // Timeout after 8 seconds
+      setTimeout(() => resolve(), 8000)
+    })
+
+    // 5) Wait for window load (fonts, etc.) but with a timeout to avoid hanging
     const windowLoad = new Promise<void>((resolve) => {
       if (typeof window === "undefined") return resolve()
       if (document.readyState === "complete") return resolve()
@@ -43,10 +72,10 @@ export function InitialLoader({ children }: Props) {
       // cleanup handled by resolve path
     })
 
-    Promise.all([modelFetch, preloadBundles, windowLoad]).then(() => {
+    Promise.all([modelFetch, preloadBundles, imageLoad, windowLoad]).then(() => {
       // small delay for smoother transition
       if (!mounted) return
-      setTimeout(() => setReady(true), 200)
+      setTimeout(() => setReady(true), 500)
     })
 
     return () => {
@@ -64,10 +93,10 @@ export function InitialLoader({ children }: Props) {
   if (!ready) {
     return (
       <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-background text-foreground">
-        <div className="flex flex-col items-center gap-4">
+        <div className="flex flex-col items-center gap-6">
           {/* small animated UFO preview */}
-          <div className="w-20 h-20 flex items-center justify-center">
-            <svg className="-rotate-6" width="80" height="80" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <div className="w-24 h-24 flex items-center justify-center">
+            <svg className="-rotate-6" width="96" height="96" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
               <defs>
                 <linearGradient id="g1" x1="0" x2="1">
                   <stop offset="0%" stopColor="#9be7ff" />
@@ -84,7 +113,19 @@ export function InitialLoader({ children }: Props) {
               </g>
             </svg>
           </div>
-          <div className="text-sm opacity-90">Loading 3D assets…</div>
+          
+          {/* Loading text with animation */}
+          <div className="text-center">
+            <div className="text-lg font-semibold mb-2">Loading Portfolio</div>
+            <div className="text-sm opacity-90 mb-4">Preparing 3D assets, music, and content...</div>
+            
+            {/* Loading dots animation */}
+            <div className="flex justify-center space-x-1">
+              <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"></div>
+              <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+              <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+            </div>
+          </div>
         </div>
         <style>{`
           @keyframes ufoBob { 0% { transform: translateY(0);} 50% { transform: translateY(-6px);} 100% { transform: translateY(0);} }
