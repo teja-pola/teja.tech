@@ -9,8 +9,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 const techStack = [
   'React', 'TypeScript', 'Node.js', 'Next.js',
-  'PostgreSQL', 'MongoDB', 'GraphQL', 'AWS',
-  'Docker', 'HTML', 'Python', 'TailwindCSS',
+  'PostgreSQL', 'MongoDB', 'Basketball', 
+  'Docker', 'HTML', 'Python', 'TailwindCSS','Volleyball',
   'Agents', 'Express', 'Three.js', 'Hono', 'RAG', 'LLMs', 'WEB3', 'cloudflare', 'JavaScript'
 ];
 
@@ -21,8 +21,12 @@ export function SkillsPhysics() {
   const bodiesRef = useRef<{ body: Matter.Body; el: HTMLDivElement }[]>([]);
   const hasStarted = useRef(false);
   const [isMobile, setIsMobile] = useState(false);
-  const plateHeight = 40;
-  const plateWidth = 120;
+  const [scaleFactor, setScaleFactor] = useState(1);
+  const basePlateHeight = 40;
+  const basePlateWidth = 120;
+  const baseSpacing = 10;
+  const plateHeight= 40;
+  const plateWidth=120;
   const spacing = 10;
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const [isReady, setIsReady] = useState(false);
@@ -55,14 +59,34 @@ export function SkillsPhysics() {
     ];
     Matter.World.add(engine.world, walls);
 
+    // Determine scale factor based on viewport
+    let scale = 1;
+    if (width < 480) {
+      scale = 0.5; // Small mobile
+    } else if (width < 640) {
+      scale = 0.6; // Mobile
+    } else if (width < 768) {
+      scale = 0.7; // Large mobile
+    } else if (width < 1024) {
+      scale = 0.75; // Tablet
+    } else if (width <= 1280 && height <= 800) {
+      scale = 0.8; // Nest Hub / Nest Hub Max
+    }
+    setScaleFactor(scale);
+
+    const plateHeight = basePlateHeight * scale;
+    const plateWidth = basePlateWidth * scale;
+    const spacing = baseSpacing * scale;
+    const fontSize = Math.max(10, 14 * scale);
+
     // Create tech stack plates
     const bodies = techStack.map((tech, i) => {
       const el = document.createElement('div');
       el.className = 'tech-plate';
       el.innerText = tech;
       
-      // Calculate width based on text length
-      const textWidth = Math.max(plateWidth, tech.length * 10);
+      // Calculate width based on text length and scale
+      const textWidth = Math.max(plateWidth, tech.length * 10 * scale);
       
       el.style.cssText = `
         position: absolute;
@@ -73,8 +97,9 @@ export function SkillsPhysics() {
         display: flex;
         align-items: center;
         justify-content: center;
-        border-radius: 30px;
+        border-radius: ${30 * scale}px;
         font-weight: 500;
+        font-size: ${fontSize}px;
         user-select: none;
         z-index: 20;
         background: rgba(46, 84, 209, 0.1);
@@ -95,7 +120,7 @@ export function SkillsPhysics() {
           friction: 0.2,
           frictionAir: 0.01,
           density: 0.001,
-          chamfer: { radius: 15 },
+          chamfer: { radius: 15 * scale },
           render: { fillStyle: 'transparent' }
         }
       );
@@ -167,12 +192,12 @@ export function SkillsPhysics() {
       renderRef.current = requestAnimationFrame(render);
     };
 
-    // Initial scatter effect
+    // Initial scatter effect for mobile and smaller screens
     if (window.innerWidth < 1024) {
       setIsMobile(true);
       setTimeout(() => {
         bodies.forEach(({ body }, i) => {
-          const forceMagnitude = 0.05;
+          const forceMagnitude = window.innerWidth < 640 ? 0.03 : 0.05;
           Matter.Body.applyForce(body, body.position, {
             x: (Math.random() * 100 - 50) * forceMagnitude,
             y: (Math.random() * 100) * forceMagnitude,
