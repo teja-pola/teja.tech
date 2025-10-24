@@ -39,29 +39,35 @@ export function SkillsPhysics() {
     const container = containerRef.current;
     if (!container) return;
 
-    // Initialize physics engine with realistic gravity
+    const { width, height } = container.getBoundingClientRect();
+
+    // Initialize physics engine with mobile-optimized settings
     const engine = Matter.Engine.create({
-      gravity: { x: 0, y: 1, scale: 0.001 },
+      gravity: { x: 0, y: width < 640 ? 0.5 : 1, scale: 0.001 }, // Lighter gravity for mobile
       enableSleeping: true,
-      
+      timing: {
+        timeScale: width < 640 ? 0.8 : 1 // Slower physics for mobile
+      }
     });
     engineRef.current = engine;
+    // Adjust wall thickness and positioning for mobile screens
+    const wallThickness = width < 640 ? 10 : 50;
+    const wallOffset = width < 640 ? 5 : 25; // Smaller offset for mobile
 
-    const { width, height } = container.getBoundingClientRect();
-    const wallThickness = 50;
-
-    // Create walls
+    // Create walls with better mobile positioning
     const walls = [
-      Matter.Bodies.rectangle(width / 2, -wallThickness / 2, width, wallThickness, { isStatic: true }), // Top
-      Matter.Bodies.rectangle(width / 2, height + wallThickness / 2, width, wallThickness, { isStatic: true }), // Bottom
-      Matter.Bodies.rectangle(-wallThickness / 2, height / 2, wallThickness, height, { isStatic: true }), // Left
-      Matter.Bodies.rectangle(width + wallThickness / 2, height / 2, wallThickness, height, { isStatic: true }), // Right
+      Matter.Bodies.rectangle(width / 2, -wallOffset, width, wallThickness, { isStatic: true }), // Top
+      Matter.Bodies.rectangle(width / 2, height + wallOffset, width, wallThickness, { isStatic: true }), // Bottom
+      Matter.Bodies.rectangle(-wallOffset, height / 2, wallThickness, height, { isStatic: true }), // Left
+      Matter.Bodies.rectangle(width + wallOffset, height / 2, wallThickness, height, { isStatic: true }), // Right
     ];
     Matter.World.add(engine.world, walls);
 
-    // Determine scale factor based on viewport
+    // Determine scale factor based on viewport with better mobile scaling
     let scale = 1;
-    if (width < 480) {
+    if (width < 360) {
+      scale = 0.4; // Very small mobile (iPhone SE, etc.)
+    } else if (width < 480) {
       scale = 0.5; // Small mobile
     } else if (width < 640) {
       scale = 0.6; // Mobile
@@ -109,17 +115,27 @@ export function SkillsPhysics() {
       
       container.appendChild(el);
 
-      // Create physics body
+      // Create physics body with better mobile positioning
+      // Ensure plates are created within visible bounds
+      const maxY = height * 0.7; // Don't go beyond 70% of container height
+      const initialY = width < 640 ? 
+        Math.min(20 + i * (plateHeight + spacing * 0.5), maxY) : 
+        Math.min(100 + i * (plateHeight + spacing), maxY);
+      
+      // Ensure plates start in center and visible area
+      const startX = Math.max(50, Math.min(width - 50, width / 2));
+      const startY = Math.max(30, Math.min(height - 30, initialY));
+      
       const body = Matter.Bodies.rectangle(
-        width / 2,
-        100 + i * (plateHeight + spacing),
+        startX,
+        startY,
         textWidth,
         plateHeight,
         {
-          restitution: 0.5,
-          friction: 0.2,
-          frictionAir: 0.01,
-          density: 0.001,
+          restitution: 0.3,
+          friction: 0.1,
+          frictionAir: 0.005,
+          density: 0.0005,
           chamfer: { radius: 15 * scale },
           render: { fillStyle: 'transparent' }
         }
@@ -197,13 +213,23 @@ export function SkillsPhysics() {
       setIsMobile(true);
       setTimeout(() => {
         bodies.forEach(({ body }, i) => {
-          const forceMagnitude = window.innerWidth < 640 ? 0.03 : 0.05;
+          // Very gentle scatter for mobile
+          let forceMagnitude = 0.01;
+          if (window.innerWidth < 360) {
+            forceMagnitude = 0.005; // Very gentle for tiny screens
+          } else if (window.innerWidth < 480) {
+            forceMagnitude = 0.008; // Gentle for small mobile
+          } else if (window.innerWidth < 640) {
+            forceMagnitude = 0.01; // Moderate for mobile
+          }
+          
+          // Apply gentle force to keep plates visible
           Matter.Body.applyForce(body, body.position, {
-            x: (Math.random() * 100 - 50) * forceMagnitude,
-            y: (Math.random() * 100) * forceMagnitude,
+            x: (Math.random() * 20 - 10) * forceMagnitude,
+            y: (Math.random() * 10) * forceMagnitude,
           });
         });
-      }, 500);
+      }, 1000); // Longer delay for mobile
     }
 
     render();
@@ -287,6 +313,9 @@ export function SkillsPhysics() {
         backgroundColor: 'rgba(18, 18, 20, 0.5)',
         backdropFilter: 'blur(10px)',
         border: '1px solid rgba(255, 255, 255, 0.1)',
+        minHeight: '300px', // Ensure minimum height for mobile
+        minWidth: '280px', // Ensure minimum width for mobile
+        position: 'relative',
       }}
     >
       {/* Tech stack items will be rendered here by the physics engine */}
