@@ -2,10 +2,13 @@
 import dynamic from "next/dynamic"
 import React, { useCallback, useState } from "react"
 
-const GitHubCalendar = dynamic(() => import("react-github-calendar").then((m) => m.default), {
-  ssr: false,
-  loading: () => <div className="h-[159px] w-full" />,
-})
+const GitHubCalendar = dynamic(
+  () => import("react-github-calendar").then((m: any) => m.default ?? m),
+  {
+    ssr: false,
+    loading: () => <div className="h-[159px] w-full" />,
+  }
+)
 
 function GithubCalendar() {
   const [totalCount, setTotalCount] = useState(0)
