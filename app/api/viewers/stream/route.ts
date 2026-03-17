@@ -8,34 +8,38 @@ export async function GET() {
 
   viewers += 1
 
+  let heartbeat: ReturnType<typeof setInterval> | null = null
+  let closed = false
+
   const stream = new ReadableStream<Uint8Array>({
     start(controller) {
       const send = () => {
-        controller.enqueue(encoder.encode(`data: ${JSON.stringify({ count: viewers })}\n\n`))
+        if (closed) return
+        try {
+          controller.enqueue(encoder.encode(`data: ${JSON.stringify({ count: viewers })}\n\n`))
+        } catch {
+          cleanup()
+        }
+      }
+
+      const cleanup = () => {
+        if (closed) return
+        closed = true
+        if (heartbeat) clearInterval(heartbeat)
+        viewers = Math.max(0, viewers - 1)
+        try { controller.close() } catch {}
       }
 
       // Send immediately so the client shows a value quickly
       send()
 
       // Keep connection alive and periodically refresh count
-      const heartbeat = setInterval(send, 15_000)
-
-      const onAbort = () => {
-        clearInterval(heartbeat)
-        viewers = Math.max(0, viewers - 1)
-        try {
-          controller.close()
-        } catch {}
-      }
-
-      // Close cleanly when client disconnects
-      ;(controller as ReadableStreamDefaultController<Uint8Array> & { signal?: AbortSignal }).signal?.addEventListener(
-        "abort",
-        onAbort,
-        { once: true }
-      )
+      heartbeat = setInterval(send, 15_000)
     },
     cancel() {
+      if (closed) return
+      closed = true
+      if (heartbeat) clearInterval(heartbeat)
       viewers = Math.max(0, viewers - 1)
     },
   })
