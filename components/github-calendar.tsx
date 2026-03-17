@@ -1,13 +1,6 @@
 "use client"
-import dynamic from "next/dynamic"
 import React, { useCallback, useState } from "react"
-
-// dynamic without .then() — next/dynamic automatically resolves .default
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const GitHubCalendar = dynamic<any>(() => import("react-github-calendar"), {
-  ssr: false,
-  loading: () => <div className="h-[159px] w-full" />,
-})
+import GitHubCalendar from "react-github-calendar"
 
 function GithubCalendar() {
   const [totalCount, setTotalCount] = useState(0)
@@ -24,11 +17,9 @@ function GithubCalendar() {
     return contributions.slice(91, 365)
   }, [])
 
-  const GH: React.ComponentType<any> = GitHubCalendar as unknown as React.ComponentType<any>
-
   return (
     <div className="github-calendar-wrapper mx-auto flex justify-center my-1">
-      <GH username="teja-pola" transformData={processContributions} totalCount={totalCount} />
+      <GitHubCalendar username="teja-pola" transformData={processContributions} totalCount={totalCount} />
       <style>{`.github-calendar-wrapper .ContributionCalendar-label, .github-calendar-wrapper h2 { display: none !important; }`}</style>
     </div>
   )
