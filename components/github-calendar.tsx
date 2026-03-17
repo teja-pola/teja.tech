@@ -2,13 +2,12 @@
 import dynamic from "next/dynamic"
 import React, { useCallback, useState } from "react"
 
-const GitHubCalendar = dynamic(
-  () => import("react-github-calendar").then((m: any) => m.default ?? m),
-  {
-    ssr: false,
-    loading: () => <div className="h-[159px] w-full" />,
-  }
-)
+// dynamic without .then() — next/dynamic automatically resolves .default
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const GitHubCalendar = dynamic<any>(() => import("react-github-calendar"), {
+  ssr: false,
+  loading: () => <div className="h-[159px] w-full" />,
+})
 
 function GithubCalendar() {
   const [totalCount, setTotalCount] = useState(0)
