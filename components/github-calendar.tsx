@@ -2,7 +2,7 @@
 import dynamic from "next/dynamic"
 import React, { useCallback, useState } from "react"
 
-const GitHubCalendar = dynamic(() => import("react-github-calendar") as Promise<any>, {
+const GitHubCalendar = dynamic(() => import("react-github-calendar").then((m) => m.default), {
   ssr: false,
   loading: () => <div className="h-[159px] w-full" />,
 })
