@@ -1,6 +1,6 @@
 "use client"
 import React, { useCallback, useState } from "react"
-import GitHubCalendar from "react-github-calendar"
+import { GitHubCalendar } from "react-github-calendar"
 
 function GithubCalendar() {
   const [totalCount, setTotalCount] = useState(0)
